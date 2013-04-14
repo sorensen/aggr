@@ -19,7 +19,7 @@ var aggr = require('aggr')
 Browser
 
 ```html
-<script src="dif.min.js"></script>
+<script src="aggr.min.js"></script>
 ```
 
 ### aggr(namespace, data, [options], callback)
