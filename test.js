@@ -110,7 +110,7 @@ describe('Aggregation', function() {
     setTimeout(function() { aggr(ns, {c: 'c'}, opt, callback) }, 30)
   })
 
-  it('should work with a custom duration', function(done) {
+  it('should work with a debounced duration', function(done) {
     var ns = 'timeouts-2'
       , len = 4
       , opt = {duration: 30, debounce: true}
@@ -185,6 +185,16 @@ describe('Aggregation', function() {
     aggr(ns, {d: 'd'}, opt, callback)
   })
 
+  it('should work with the wrap shortcut', function(done) {
+    var fn = aggr.wrap('wrap', function(all) {
+      ade(all, {a: 'a', b: 'b', c: 'c'})
+      done()
+    })
+    fn({b: 'b'})
+    fn({a: 'a'})
+    fn({c: 'c'})
+  })
+
   it('should work with the example queue', function(done) {
     var len = 6
     function callback() {
@@ -239,5 +249,10 @@ describe('Aggregation', function() {
         callback()
       })
     })
+  })
+
+  it('should be minified and up to date', function() {
+    var min = require('./aggr.min')
+    ase(min.VERSION, aggr.VERSION)
   })
 })

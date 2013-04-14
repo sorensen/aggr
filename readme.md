@@ -10,8 +10,16 @@ as they are overlapping within a single process tick.
 Usage
 -----
 
+Node.js
+
 ```js
 var aggr = require('aggr')
+```
+
+Browser
+
+```html
+<script src="dif.min.js"></script>
 ```
 
 ### aggr(namespace, data, [options], callback)
@@ -88,6 +96,28 @@ aggr(ns, {a: 'a'}, done)
 aggr(ns, {b: 'b'}, done)
 aggr(ns, {c: 'c'}, done)
 aggr(ns, {c: 10}, done)
+```
+
+Shortcut
+--------
+
+You can create a shortcut method to use for aggregation by using `aggr.wrap`, 
+this will return a function that takes a single `data` argument. By default 
+it has `noop` set to true, which seems to make more sense since you only pass 
+a callback once.
+
+### aggr.wrap(namespace, [options], callback)
+
+```js
+// By default this will only be called once
+function done(obj) {
+  // obj === {dark: 'coffee', is: 'good'}
+}
+
+var wrapped = aggr.wrap('lettuce', done)
+
+wrapped({dark: 'coffee'})
+wrapped({is: 'good'})
 ```
 
 
